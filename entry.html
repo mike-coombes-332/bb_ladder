@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+            <textarea cols="50" rows="25" name="message" id="message" placeholder="Enter Teams here" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required></textarea>
+
+<p>Choose the match bracket:</p>
+<input type="radio" name="JTP" id="GS" value="GS">Gold/Silver<br>   
+<input type="radio" name="JTP" id="RR" value="RR">RoundRobin<br>   
+
+<div class="mb-6">
+            <button id="submit" type="submit" class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">
+              READ IN TEAMS
+            </button>
+          </div>
+<p id="status"></p>
+<p id="out"></p>
+<textarea cols="50" rows="15" name="message" id="Games" placeholder="" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required></textarea>
+
+
+<script>
+document.getElementById("submit").onclick = function() {myFunction()};
+
+function myFunction() {
+  var string = document.getElementById('message').value
+  var array = string.split("\n");
+  
+  console.log(array);
+  let numteams = array.length;
+  document.getElementById("status").innerHTML = "LOADED! => " + numteams + " Teams";
+  console.log(numteams+"Teams")
+  if(document.getElementById('GS').checked == true) {   
+        console.log("Gold/Silver");  
+        var games = numteams/2;
+        if (numteams%2 == 1) {
+             console.log("odd"); 
+        }
+        var selected = new Array(numteams);
+        selected = myRandArray(numteams);
+        let OutputData= '  Team A                     Team B';
+        for (let j=0; j<numteams; j=j+2) 
+        {
+        console.log(array[selected[j]],"    ",array[selected[j+1]]); 
+        OutputData= OutputData+'\n  '+array[selected[j]]+'  '+array[selected[j+1]]+' ';
+        }
+        document.getElementById('Games').innerHTML=OutputData;
+        console.log(OutputData);  
+  }
+  if(document.getElementById('RR').checked == true) {   
+        console.log("RoundRobin");  
+  var games = numteams-1;
+  }
+}
+
+function myRandArray(t) 
+{
+   var selected = new Array(t);
+   var index = 0;
+   var found = 0;
+   var i=0
+   var rnd = 0;
+
+   while (i<t) 
+   {
+      found = 0;
+      rnd = Math.floor(Math.random()*t);
+      for (let j=0; j<t; j++) 
+      {
+         if (rnd == selected[j]) 
+         {
+            found = 1;
+
+         }
+      }
+      console.log(i,rnd,found);
+      if (found == 0) 
+      {
+           selected[i] =rnd;
+           i++;
+      }  
+      if (found == 1) 
+      {
+          found = 0;
+      }
+      
+      }
+console.log(selected)
+return selected;
+}
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
